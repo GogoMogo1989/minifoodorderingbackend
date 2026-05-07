@@ -17,9 +17,7 @@ export class UsersService {
   ) {}
 
   async createCustomer(input: CreateUserInput) {
-    const existingUser = await this.userModel.findOne({
-      email: input.email.toLowerCase(),
-    });
+    const existingUser = await this.findByEmail(input.email);
 
     if (existingUser) {
       throw new ConflictException('Email is already registered');
@@ -34,7 +32,13 @@ export class UsersService {
     return this.toSafeUser(user);
   }
 
-  private toSafeUser(user: UserDocument) {
+  async findByEmail(email: string) {
+    return this.userModel.findOne({
+      email: email.toLowerCase(),
+    });
+  }
+
+  toSafeUser(user: UserDocument) {
     return {
       id: String(user._id),
       name: user.name,
