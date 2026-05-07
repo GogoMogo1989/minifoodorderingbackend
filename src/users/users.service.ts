@@ -16,6 +16,10 @@ export class UsersService {
     private readonly userModel: Model<UserDocument>,
   ) {}
 
+  async findById(id: string) {
+    return this.userModel.findById(id);
+  }
+
   async createCustomer(input: CreateUserInput) {
     const existingUser = await this.findByEmail(input.email);
 
@@ -45,4 +49,5 @@ export class UsersService {
       email: user.email,
     };
   }
+
 }
