@@ -21,6 +21,12 @@ async function bootstrap() {
     .setTitle('Mini Food Ordering API')
     .setDescription('Backend API for the Mini Food Ordering System')
     .setVersion('1.0')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      description: 'Enter JWT token',
+    })
     .build();
 
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
@@ -31,4 +37,5 @@ async function bootstrap() {
 
   await app.listen(port);
 }
+
 bootstrap();

@@ -41,6 +41,12 @@ export class RestaurantsService {
   }
 
   async findById(id: string) {
+    const restaurant = await this.findDocumentById(id);
+
+    return this.toRestaurantDetails(restaurant);
+  }
+
+  async findDocumentById(id: string) {
     if (!Types.ObjectId.isValid(id)) {
       throw new BadRequestException('Invalid restaurant id');
     }
@@ -51,7 +57,7 @@ export class RestaurantsService {
       throw new NotFoundException('Restaurant not found');
     }
 
-    return this.toRestaurantDetails(restaurant);
+    return restaurant;
   }
 
   private toRestaurantDetails(restaurant: RestaurantDocument) {
